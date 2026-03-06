@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import Spline from "@splinetool/react-spline";
+import Spline from '@splinetool/react-spline';
 
-const SPLINE_URL = "https://prod.spline.design/5QSlhRok4G5W-sUn/scene.splinecode";
 
 const AI_AVATAR = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -52,11 +51,14 @@ export default function App() {
   const [input, setInput] = useState("");
   const [aiTyping, setAiTyping] = useState(false);
   const [qIndex, setQIndex] = useState(0);
+  const splineContainerRef = useRef(null);
   const chatEndRef = useRef(null);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, aiTyping]);
+
+
 
   const handleAuth = () => {
     if (!email || !password) return;
@@ -152,9 +154,20 @@ export default function App() {
         .endbtn:hover { background: rgba(239,68,68,0.18) !important; color: #f87171 !important; }
       `}</style>
 
-      {/* ── Spline 3D bg ── */}
-      <div style={{ position:"fixed", inset:0, zIndex:0, pointerEvents:"none", overflow:"hidden" }}>
-        <Spline scene={SPLINE_URL} />
+      {/* ──────────────────────────────────────────
+          SPLINE 3D Viewer (Real 3D Component)
+          ────────────────────────────────────────── */}
+      <div 
+        ref={splineContainerRef}
+        style={{ 
+          position:"fixed", 
+          inset:0, 
+          zIndex:0, 
+          pointerEvents:"auto",
+          overflow:"hidden",
+        }}
+      >
+        <Spline scene="https://prod.spline.design/evZYNQ-vMsoYWgc9/scene.splinecode" />
       </div>
       <div style={{ position:"fixed", inset:0, zIndex:1, pointerEvents:"none",
         background:"radial-gradient(ellipse at 15% 50%, rgba(6,6,15,0.2), rgba(6,6,15,0.62))" }}/>
@@ -166,19 +179,19 @@ export default function App() {
       ══════════════════════════════════════════ */}
       {screen === "login" && (
         <div style={{
-          position: "fixed",       /* viewport-relative — immune to layout */
+          position: "fixed",
           top: "50%",
           right: "7vw",
           transform: "translateY(-50%)",
           zIndex: 20,
           width: 396,
-          background: "rgba(7,7,18,0.76)",
-          backdropFilter: "blur(30px) saturate(1.4)",
-          WebkitBackdropFilter: "blur(30px) saturate(1.4)",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "rgba(20,20,40,0.25)",
+          backdropFilter: "blur(60px) saturate(2.0)",
+          WebkitBackdropFilter: "blur(60px) saturate(2.0)",
+          border: "1px solid rgba(255,255,255,0.2)",
           borderRadius: 22,
           padding: "34px 30px 30px",
-          boxShadow: "0 28px 70px rgba(0,0,0,0.65), inset 0 0 0 1px rgba(255,255,255,0.04)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.12)",
         }}>
 
           {/* Logo row */}
@@ -299,13 +312,13 @@ export default function App() {
           CHAT SCREEN
       ══════════════════════════════════════════ */}
       {screen === "chat" && (
-        <div style={{ position:"fixed", inset:0, zIndex:20, display:"flex", flexDirection:"column" }}>
+        <div style={{ position:"fixed", inset:0, zIndex:20, display:"flex", flexDirection:"column", background: "rgba(10,10,20,0.5)", backdropFilter: "blur(60px)", WebkitBackdropFilter: "blur(60px)" }}>
 
           {/* Header */}
           <div style={{
             display:"flex", alignItems:"center", gap:14, padding:"13px 22px",
-            background:"rgba(6,6,15,0.82)", backdropFilter:"blur(20px)",
-            borderBottom:"1px solid rgba(255,255,255,0.06)", flexShrink:0,
+            background:"rgba(15,15,30,0.2)", backdropFilter:"blur(50px)", WebkitBackdropFilter:"blur(50px)",
+            borderBottom:"1px solid rgba(255,255,255,0.1)", flexShrink:0,
           }}>
             <div style={{
               width:38, height:38, borderRadius:"50%", position:"relative",
@@ -334,7 +347,7 @@ export default function App() {
           </div>
 
           {/* Messages */}
-          <div style={{ flex:1, overflowY:"auto", padding:"22px 0", display:"flex", flexDirection:"column", gap:2 }}>
+          <div style={{ flex:1, overflowY:"auto", padding:"22px 0", display:"flex", flexDirection:"column", gap:2, background: "rgba(10,10,20,0.2)", backdropFilter: "blur(40px)" }}>
             {messages.map(msg => (
               <div key={msg.id} className="mi" style={{
                 display:"flex", padding:"4px 22px",
@@ -352,11 +365,11 @@ export default function App() {
                 <div style={{
                   maxWidth:500, padding:"12px 16px", fontSize:14.5, lineHeight:1.65,
                   borderRadius: msg.role==="ai" ? "18px 18px 18px 4px" : "18px 18px 4px 18px",
-                  background: msg.role==="ai" ? "rgba(255,255,255,0.06)" : "linear-gradient(135deg,#1d4ed8,#4338ca)",
-                  border: msg.role==="ai" ? "1px solid rgba(255,255,255,0.07)" : "none",
+                  background: msg.role==="ai" ? "rgba(255,255,255,0.08)" : "linear-gradient(135deg,rgba(29,78,216,0.9),rgba(67,56,202,0.9))",
+                  border: msg.role==="ai" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(255,255,255,0.15)",
                   color: msg.role==="ai" ? "rgba(255,255,255,0.88)" : "#fff",
-                  backdropFilter: msg.role==="ai" ? "blur(10px)" : "none",
-                  boxShadow: msg.role==="user" ? "0 4px 14px rgba(67,56,202,0.26)" : "none",
+                  backdropFilter: msg.role==="ai" ? "blur(20px)" : "blur(10px)",
+                  boxShadow: msg.role==="user" ? "0 4px 14px rgba(67,56,202,0.4)" : "0 2px 8px rgba(0,0,0,0.2)",
                 }}>{msg.text}</div>
               </div>
             ))}
@@ -385,13 +398,13 @@ export default function App() {
           {/* Input */}
           <div style={{
             padding:"13px 22px 17px",
-            background:"rgba(6,6,15,0.84)", backdropFilter:"blur(20px)",
-            borderTop:"1px solid rgba(255,255,255,0.06)", flexShrink:0,
+            background:"rgba(15,15,30,0.2)", backdropFilter:"blur(50px)", WebkitBackdropFilter:"blur(50px)",
+            borderTop:"1px solid rgba(255,255,255,0.1)", flexShrink:0,
           }}>
             <div style={{
               display:"flex", alignItems:"flex-end", gap:10,
-              background:"rgba(255,255,255,0.05)", border:"1.5px solid rgba(255,255,255,0.08)",
-              borderRadius:14, padding:"11px 13px",
+            background:"rgba(255,255,255,0.05)", border:"1.5px solid rgba(255,255,255,0.15)",
+            borderRadius:14, padding:"11px 13px", backdropFilter:"blur(30px)",
             }}>
               <textarea rows={1} placeholder="Type your answer here..."
                 value={input} onChange={e=>setInput(e.target.value)}
