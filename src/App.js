@@ -153,8 +153,14 @@ export default function App() {
 
       {/* ── Spline 3D bg ── */}
       <div style={{ position:"fixed", inset:0, zIndex:0, pointerEvents:"none" }}>
-        <iframe src={SPLINE_URL} title="bg" allow="autoplay" loading="lazy"
-          style={{ width:"100%", height:"100%", border:"none" }}/>
+        <iframe 
+          src={SPLINE_URL} 
+          title="bg" 
+          allow="autoplay; camera; microphone" 
+          loading="lazy"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-presentation"
+          style={{ width:"100%", height:"100%", border:"none" }}
+        />
       </div>
       <div style={{ position:"fixed", inset:0, zIndex:1, pointerEvents:"none",
         background:"radial-gradient(ellipse at 15% 50%, rgba(6,6,15,0.2), rgba(6,6,15,0.62))" }}/>
