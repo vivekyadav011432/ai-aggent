@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import Spline from "@splinetool/react-spline";
 
-const SPLINE_URL = "https://my.spline.design/a38eafa0-2fa5-4630-983f-6940475adf5e/";
+const SPLINE_URL = "https://prod.spline.design/5QSlhRok4G5W-sUn/scene.splinecode";
 
 const AI_AVATAR = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -152,15 +153,8 @@ export default function App() {
       `}</style>
 
       {/* ── Spline 3D bg ── */}
-      <div style={{ position:"fixed", inset:0, zIndex:0, pointerEvents:"none" }}>
-        <iframe 
-          src={SPLINE_URL} 
-          title="bg" 
-          allow="autoplay; camera; microphone" 
-          loading="lazy"
-          sandbox="allow-same-origin allow-scripts allow-popups allow-presentation"
-          style={{ width:"100%", height:"100%", border:"none" }}
-        />
+      <div style={{ position:"fixed", inset:0, zIndex:0, pointerEvents:"none", overflow:"hidden" }}>
+        <Spline scene={SPLINE_URL} />
       </div>
       <div style={{ position:"fixed", inset:0, zIndex:1, pointerEvents:"none",
         background:"radial-gradient(ellipse at 15% 50%, rgba(6,6,15,0.2), rgba(6,6,15,0.62))" }}/>
